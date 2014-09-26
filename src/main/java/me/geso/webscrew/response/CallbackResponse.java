@@ -1,7 +1,10 @@
 package me.geso.webscrew.response;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.NonNull;
@@ -17,22 +20,27 @@ public class CallbackResponse implements WebResponse {
 
 	private final Callback callback;
 	private final Headers headers;
+	private final List<Cookie> cookies;
 
 	public CallbackResponse(@NonNull Callback callback) {
 		this.callback = callback;
 		this.headers = new Headers();
+		this.cookies = new ArrayList<>();
 	}
 
 	@Override
 	public void write(HttpServletResponse response) throws IOException {
-		for (String name : headers.keySet()) {
-			for (String value : headers.getAll(name)) {
+		for (final Cookie cookie : this.cookies) {
+			response.addCookie(cookie);
+		}
+		for (final String name : headers.keySet()) {
+			for (final String value : headers.getAll(name)) {
 				response.addHeader(name, value);
 			}
 		}
 		try {
 			this.callback.call(response);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -50,6 +58,11 @@ public class CallbackResponse implements WebResponse {
 	@FunctionalInterface
 	public static interface Callback {
 		public void call(HttpServletResponse resp) throws Exception;
+	}
+
+	@Override
+	public void addCookie(Cookie cookie) {
+		this.cookies.add(cookie);
 	}
 
 }

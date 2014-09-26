@@ -2,6 +2,7 @@ package me.geso.webscrew.response;
 
 import java.io.IOException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -20,6 +21,8 @@ public interface WebResponse {
 	public void write(HttpServletResponse response) throws IOException;
 
 	public void addHeader(String name, String value);
+
+	public void addCookie(Cookie cookie);
 
 	public void setHeader(String name, String value);
 }
