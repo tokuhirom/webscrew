@@ -30,7 +30,7 @@ public class RedirectResponse implements WebResponse {
 	@Override
 	public void write(HttpServletResponse response) throws IOException {
 		for (final Cookie cookie : this.cookies) {
-			this.addCookie(cookie);
+			response.addCookie(cookie);
 		}
 		for (final String name : headers.keySet()) {
 			for (final String value : headers.getAll(name)) {
