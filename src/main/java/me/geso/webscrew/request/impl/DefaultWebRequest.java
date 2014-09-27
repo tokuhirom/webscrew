@@ -27,8 +27,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * This class represents HTTP request. The object isn't thread safe. You
  * shouldn't share this object between threads.
@@ -41,7 +39,6 @@ public class DefaultWebRequest implements WebRequest {
 	private MultiMap<String, WebRequestUpload> uploads;
 	private Parameters queryParams;
 	private Parameters bodyParams;
-	private final ObjectMapper mapper = new ObjectMapper();
 
 	public DefaultWebRequest(final HttpServletRequest request) {
 		this.servletRequest = request;
