@@ -21,7 +21,8 @@ public class DefaultWebRequestTest {
 				(req, resp) -> {
 					final DefaultWebRequest r = new DefaultWebRequest(req,
 							StandardCharsets.UTF_8);
-					assertThat(r.getQueryParams().get("hoge"), is("fuga"));
+					assertThat(r.getQueryParams().getFirst("hoge").get(),
+							is("fuga"));
 					resp.getWriter().write("ok");
 				});
 		try (MechJettyServlet mech = new MechJettyServlet(servlet)) {
