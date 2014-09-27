@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
+import lombok.NonNull;
 import me.geso.webscrew.Parameters;
 
 import org.apache.commons.collections4.MapUtils;
@@ -12,7 +13,7 @@ import org.apache.commons.collections4.map.MultiValueMap;
 
 public class UrlEncoded {
 	public static Parameters parseQueryString(String queryString,
-			String encoding) throws UnsupportedEncodingException {
+			@NonNull String encoding) throws UnsupportedEncodingException {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		final MultiValueMap<String, String> query =
 				MapUtils.multiValueMap(new LinkedHashMap(), LinkedHashSet.class);

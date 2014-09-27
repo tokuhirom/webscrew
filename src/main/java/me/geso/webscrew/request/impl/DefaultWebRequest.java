@@ -2,6 +2,7 @@ package me.geso.webscrew.request.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,8 +43,15 @@ public class DefaultWebRequest implements WebRequest {
 	private Parameters queryParams;
 	private Parameters bodyParams;
 
-	public DefaultWebRequest(final HttpServletRequest request) {
+	public DefaultWebRequest(final HttpServletRequest request,
+			String characterEncoding) throws UnsupportedEncodingException {
 		this.servletRequest = request;
+		this.servletRequest.setCharacterEncoding(characterEncoding);
+	}
+
+	public DefaultWebRequest(final HttpServletRequest request,
+			Charset characterEncoding) throws UnsupportedEncodingException {
+		this(request, characterEncoding.toString());
 	}
 
 	/*
@@ -166,8 +174,18 @@ public class DefaultWebRequest implements WebRequest {
 		this.servletRequest.changeSessionId();
 	}
 
-	protected String getCharacterEncoding() {
-		return this.servletRequest.getCharacterEncoding();
+	/**
+	 * Get character encoding.
+	 * 
+	 * @return
+	 */
+	public String getCharacterEncoding() {
+		final String encoding = this.servletRequest.getCharacterEncoding();
+		if (encoding == null) {
+			throw new IllegalStateException(
+					"HttpServletRequest#getCharacterEncoding() returns null");
+		}
+		return encoding;
 	}
 
 	/*
@@ -287,22 +305,6 @@ public class DefaultWebRequest implements WebRequest {
 			}
 			return this.bodyParams;
 		} catch (final IOException | FileUploadException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * me.geso.webscrew.request.WebRequest#setCharacterEncoding(java.lang.String
-	 * )
-	 */
-	@Override
-	public void setCharacterEncoding(final String env) {
-		try {
-			this.servletRequest.setCharacterEncoding(env);
-		} catch (final UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
 	}

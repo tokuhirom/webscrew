@@ -141,6 +141,4 @@ public interface WebRequest {
 
 	public abstract Parameters getBodyParams();
 
-	public abstract void setCharacterEncoding(String env);
-
 }
