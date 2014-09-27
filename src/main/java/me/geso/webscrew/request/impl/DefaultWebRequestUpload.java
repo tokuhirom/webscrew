@@ -12,7 +12,7 @@ public class DefaultWebRequestUpload implements WebRequestUpload {
 
 	private final FileItem fileItem;
 
-	public DefaultWebRequestUpload(FileItem fileItem) {
+	DefaultWebRequestUpload(FileItem fileItem) {
 		this.fileItem = fileItem;
 	}
 	
@@ -20,7 +20,7 @@ public class DefaultWebRequestUpload implements WebRequestUpload {
 	public String getString(String encoding) {
 		try {
 			return this.fileItem.getString(encoding);
-		} catch (UnsupportedEncodingException e) {
+		} catch (final UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -29,7 +29,7 @@ public class DefaultWebRequestUpload implements WebRequestUpload {
 	public InputStream getInputStream() {
 		try {
 			return this.fileItem.getInputStream();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
