@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
 import me.geso.webscrew.request.WebRequestUpload;
-import me.geso.webscrew.request.body.UrlEncoded;
 
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.map.MultiValueMap;

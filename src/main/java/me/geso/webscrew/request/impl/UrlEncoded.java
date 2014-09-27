@@ -1,4 +1,4 @@
-package me.geso.webscrew.request.body;
+package me.geso.webscrew.request.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -11,8 +11,8 @@ import me.geso.webscrew.Parameters;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.collections4.map.MultiValueMap;
 
-public class UrlEncoded {
-	public static Parameters parseQueryString(String queryString,
+class UrlEncoded {
+	static Parameters parseQueryString(String queryString,
 			@NonNull String encoding) throws UnsupportedEncodingException {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		final MultiValueMap<String, String> query =
