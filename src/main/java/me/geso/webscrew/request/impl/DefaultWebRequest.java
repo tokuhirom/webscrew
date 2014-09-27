@@ -44,13 +44,15 @@ public class DefaultWebRequest implements WebRequest {
 	private MultiMap<String, WebRequestUpload> uploads;
 	private Parameters queryParams;
 	private Parameters bodyParams;
-	private ObjectMapper mapper = new ObjectMapper();
+	private final ObjectMapper mapper = new ObjectMapper();
 
 	public DefaultWebRequest(final HttpServletRequest request) {
 		this.servletRequest = request;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getPathInfo()
 	 */
 	@Override
@@ -58,29 +60,36 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getPathInfo();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getHeader(java.lang.String)
 	 */
 	@Override
-	public String getHeader(String name) {
+	public String getHeader(final String name) {
 		return this.servletRequest.getHeader(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getHeaders(java.lang.String)
 	 */
 	@Override
-	public List<String> getHeaders(String name) {
+	public List<String> getHeaders(final String name) {
 		return Collections.list(this.servletRequest.getHeaders(name));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getHeaderMap()
 	 */
 	@Override
 	public Map<String, List<String>> getHeaderMap() {
-		Map<String, List<String>> map = new TreeMap<>();
-		Enumeration<String> headerNames = this.servletRequest.getHeaderNames();
+		final Map<String, List<String>> map = new TreeMap<>();
+		final Enumeration<String> headerNames = this.servletRequest
+				.getHeaderNames();
 		while (headerNames.hasMoreElements()) {
 			final String name = headerNames.nextElement();
 			final ArrayList<String> values = Collections
@@ -91,7 +100,9 @@ public class DefaultWebRequest implements WebRequest {
 		return map;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getContentLength()
 	 */
 	@Override
@@ -99,7 +110,9 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getContentLength();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getMethod()
 	 */
 	@Override
@@ -107,7 +120,9 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getMethod();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getRequestURI()
 	 */
 	@Override
@@ -115,7 +130,9 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getRequestURI();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getQueryString()
 	 */
 	@Override
@@ -123,7 +140,9 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getQueryString();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getCookies()
 	 */
 	@Override
@@ -131,7 +150,9 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getCookies();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getSession()
 	 */
 	@Override
@@ -139,7 +160,9 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getSession();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#changeSessionId()
 	 */
 	@Override
@@ -147,15 +170,20 @@ public class DefaultWebRequest implements WebRequest {
 		this.servletRequest.changeSessionId();
 	}
 
-	/* (non-Javadoc)
-	 * @see me.geso.webscrew.request.WebRequest#readJSON(com.fasterxml.jackson.core.type.TypeReference)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * me.geso.webscrew.request.WebRequest#readJSON(com.fasterxml.jackson.core
+	 * .type.TypeReference)
 	 */
 	@Override
 	@SneakyThrows
 	public <T> T readJSON(@NonNull final TypeReference<T> typeReference) {
-		ServletInputStream inputStream = this.servletRequest.getInputStream();
+		final ServletInputStream inputStream = this.servletRequest
+				.getInputStream();
 
-		T instance = mapper.readValue(inputStream, typeReference);
+		final T instance = this.mapper.readValue(inputStream, typeReference);
 		if (instance != null) {
 			return instance;
 		} else {
@@ -163,15 +191,18 @@ public class DefaultWebRequest implements WebRequest {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#readJSON(java.lang.Class)
 	 */
 	@Override
 	@SneakyThrows
 	public <T> T readJSON(@NonNull final Class<T> klass) {
-		ServletInputStream inputStream = this.servletRequest.getInputStream();
+		final ServletInputStream inputStream = this.servletRequest
+				.getInputStream();
 
-		T instance = mapper.readValue(inputStream, klass);
+		final T instance = this.mapper.readValue(inputStream, klass);
 		if (instance != null) {
 			return instance;
 		} else {
@@ -183,35 +214,41 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getCharacterEncoding();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getFileItem(java.lang.String)
 	 */
 	@Override
-	public Optional<WebRequestUpload> getFileItem(String name) {
+	public Optional<WebRequestUpload> getFileItem(final String name) {
 		@SuppressWarnings("unchecked")
-		Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
-				.getFileItemMap().get(name);
+		final Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
+		.getFileItemMap().get(name);
 		if (items == null) {
 			return Optional.empty();
 		}
 		return items.stream().findFirst();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getFileItems(java.lang.String)
 	 */
 	@Override
-	public Collection<WebRequestUpload> getFileItems(String name) {
+	public Collection<WebRequestUpload> getFileItems(final String name) {
 		@SuppressWarnings("unchecked")
-		Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
-				.getFileItemMap().get(name);
+		final Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
+		.getFileItemMap().get(name);
 		if (items == null) {
 			return new ArrayList<>();
 		}
 		return items;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getFileItemMap()
 	 */
 	@Override
@@ -230,11 +267,13 @@ public class DefaultWebRequest implements WebRequest {
 	 * @return
 	 */
 	protected ServletFileUpload createServletFileUpload() {
-		FileItemFactory fileItemFactory = new DiskFileItemFactory();
+		final FileItemFactory fileItemFactory = new DiskFileItemFactory();
 		return new ServletFileUpload(fileItemFactory);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getQueryParams()
 	 */
 	@Override
@@ -243,10 +282,12 @@ public class DefaultWebRequest implements WebRequest {
 			this.queryParams = UrlEncoded.parseQueryString(
 					this.getQueryString(), this.getCharacterEncoding());
 		}
-		return queryParams;
+		return this.queryParams;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getBodyParams()
 	 */
 	@Override
@@ -256,22 +297,23 @@ public class DefaultWebRequest implements WebRequest {
 			if (this.servletRequest.getContentType().startsWith(
 					"application/x-www-form-urlencoded")) {
 				// application/x-www-form-urlencoded
-				String queryString = IOUtils.toString(
+				final String queryString = IOUtils.toString(
 						this.servletRequest.getInputStream(),
 						this.getCharacterEncoding());
 				this.bodyParams = UrlEncoded.parseQueryString(
 						queryString, this.getCharacterEncoding());
-			} else if (ServletFileUpload.isMultipartContent(servletRequest)) {
+			} else if (ServletFileUpload
+					.isMultipartContent(this.servletRequest)) {
 				// multipart/form-data
-				MultiMap<String, String> bodyParams = new MultiValueMap<String, String>();
-				MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
-				ServletFileUpload servletFileUpload = this
+				final MultiMap<String, String> bodyParams = new MultiValueMap<String, String>();
+				final MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
+				final ServletFileUpload servletFileUpload = this
 						.createServletFileUpload();
-				List<FileItem> fileItems = servletFileUpload
+				final List<FileItem> fileItems = servletFileUpload
 						.parseRequest(this.servletRequest);
-				for (FileItem fileItem : fileItems) {
+				for (final FileItem fileItem : fileItems) {
 					if (fileItem.isFormField()) {
-						String value = fileItem.getString(this
+						final String value = fileItem.getString(this
 								.getCharacterEncoding());
 						bodyParams.put(fileItem.getFieldName(), value);
 					} else {
@@ -286,12 +328,16 @@ public class DefaultWebRequest implements WebRequest {
 		return this.bodyParams;
 	}
 
-	/* (non-Javadoc)
-	 * @see me.geso.webscrew.request.WebRequest#setCharacterEncoding(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * me.geso.webscrew.request.WebRequest#setCharacterEncoding(java.lang.String
+	 * )
 	 */
 	@Override
 	@SneakyThrows
-	public void setCharacterEncoding(String env) {
+	public void setCharacterEncoding(final String env) {
 		this.servletRequest.setCharacterEncoding(env);
 	}
 
