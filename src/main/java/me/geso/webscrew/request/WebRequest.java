@@ -126,7 +126,7 @@ public interface WebRequest {
 	/**
 	 * Get uploaded file items by name.
 	 * 
-	 * @param name
+	 * @param parameterName
 	 * @return
 	 */
 	public List<WebRequestUpload> getAllFileItem(String parameterName);
