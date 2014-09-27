@@ -1,5 +1,7 @@
 package me.geso.webscrew.request;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -131,6 +133,14 @@ public interface WebRequest {
 	public Collection<WebRequestUpload> getFileItems(String name);
 
 	/**
+	 * Get {@code InputStream} for content body.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	public InputStream getInputStream() throws IOException;
+
+	/**
 	 * Get all uploaded file items.
 	 * 
 	 * @return
@@ -140,6 +150,5 @@ public interface WebRequest {
 	public Parameters getQueryParams();
 
 	public Parameters getBodyParams();
-
 
 }

@@ -1,6 +1,7 @@
 package me.geso.webscrew.request.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -306,6 +307,11 @@ public class DefaultWebRequest implements WebRequest {
 		} catch (final IOException | FileUploadException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public InputStream getInputStream() throws IOException {
+		return this.servletRequest.getInputStream();
 	}
 
 }
