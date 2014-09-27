@@ -194,7 +194,7 @@ public class DefaultWebRequest implements WebRequest {
 	 * @see me.geso.webscrew.request.WebRequest#getFileItems(java.lang.String)
 	 */
 	@Override
-	public List<WebRequestUpload> getAllFileItem(
+	public List<WebRequestUpload> getAllFileItems(
 			final String parameterName) {
 		this.getBodyParams(); // initialize this.uploads
 		final List<WebRequestUpload> items = this

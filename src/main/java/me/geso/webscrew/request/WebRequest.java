@@ -129,7 +129,7 @@ public interface WebRequest {
 	 * @param parameterName
 	 * @return
 	 */
-	public List<WebRequestUpload> getAllFileItem(String parameterName);
+	public List<WebRequestUpload> getAllFileItems(String parameterName);
 
 	public Set<String> getFileItemNames();
 
