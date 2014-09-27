@@ -19,7 +19,7 @@ public interface WebRequest {
 	 * 
 	 * @return
 	 */
-	public abstract String getPathInfo();
+	public String getPathInfo();
 
 	/**
 	 * Get header string.
@@ -27,7 +27,7 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public abstract String getHeader(String name);
+	public String getHeader(String name);
 
 	/**
 	 * Get all header values by name.
@@ -35,28 +35,28 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public abstract List<String> getHeaders(String name);
+	public List<String> getHeaders(String name);
 
 	/**
 	 * Get all headers in Map.
 	 * 
 	 * @return
 	 */
-	public abstract Map<String, List<String>> getHeaderMap();
+	public Map<String, List<String>> getHeaderMap();
 
 	/**
 	 * Get CONTENT_LENGTH.
 	 * 
 	 * @return
 	 */
-	public abstract int getContentLength();
+	public int getContentLength();
 
 	/**
 	 * Get HTTP_METHOD
 	 * 
 	 * @return
 	 */
-	public abstract String getMethod();
+	public String getMethod();
 
 	/**
 	 * Returns the part of this request's URL from the protocol name up to the
@@ -86,33 +86,33 @@ public interface WebRequest {
 	 * @return a <code>String</code> containing the part of the URL from the
 	 *         protocol name up to the query string
 	 */
-	public abstract String getRequestURI();
+	public String getRequestURI();
 
 	/**
 	 * Get QUERY_STRING.
 	 * 
 	 * @return
 	 */
-	public abstract String getQueryString();
+	public String getQueryString();
 
 	/**
 	 * Get cooies.
 	 * 
 	 * @return
 	 */
-	public abstract Cookie[] getCookies();
+	public Cookie[] getCookies();
 
 	/**
 	 * Get session object.
 	 * 
 	 * @return
 	 */
-	public abstract HttpSession getSession();
+	public HttpSession getSession();
 
 	/**
 	 * Change session id.
 	 */
-	public abstract void changeSessionId();
+	public void changeSessionId();
 
 	/**
 	 * Get uploaded file object by name.
@@ -120,7 +120,7 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public abstract Optional<WebRequestUpload> getFileItem(String name);
+	public Optional<WebRequestUpload> getFileItem(String name);
 
 	/**
 	 * Get uploaded file items by name.
@@ -128,17 +128,18 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public abstract Collection<WebRequestUpload> getFileItems(String name);
+	public Collection<WebRequestUpload> getFileItems(String name);
 
 	/**
 	 * Get all uploaded file items.
 	 * 
 	 * @return
 	 */
-	public abstract MultiMap<String, WebRequestUpload> getFileItemMap();
+	public MultiMap<String, WebRequestUpload> getFileItemMap();
 
-	public abstract Parameters getQueryParams();
+	public Parameters getQueryParams();
 
-	public abstract Parameters getBodyParams();
+	public Parameters getBodyParams();
+
 
 }
