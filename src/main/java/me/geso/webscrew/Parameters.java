@@ -1,12 +1,12 @@
 package me.geso.webscrew;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface Parameters {
 
-	public Optional<String> getFirst(String name);
+	public Optional<String> getFirst(final String name);
 
-	public Collection<String> getAll(String name);
+	public List<String> getAll(final String name);
 
 }

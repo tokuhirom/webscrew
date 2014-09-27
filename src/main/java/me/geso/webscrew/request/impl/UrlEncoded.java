@@ -9,7 +9,7 @@ import me.geso.webscrew.Parameters;
 class UrlEncoded {
 	static Parameters parseQueryString(String queryString,
 			@NonNull String encoding) throws UnsupportedEncodingException {
-		final DefaultParameters.Builder builder = new DefaultParameters.Builder();
+		final DefaultParameters.Builder builder = DefaultParameters.builder();
 		if (queryString != null) {
 			for (final String pair : queryString.split("&")) {
 				final int eq = pair.indexOf("=");

@@ -24,7 +24,7 @@ public class DefaultParameters implements Parameters {
 
 	private final Map<String, List<String>> map;
 
-	DefaultParameters(Map<String, List<String>> map) {
+	private DefaultParameters(Map<String, List<String>> map) {
 		this.map = map;
 	}
 
@@ -52,20 +52,27 @@ public class DefaultParameters implements Parameters {
 	 * @return
 	 */
 	@Override
-	public Collection<String> getAll(String name) {
-		final Collection<String> collection = map
+	public List<String> getAll(final String name) {
+		final List<String> collection = map
 				.get(name);
 		if (collection == null) {
 			return Collections.emptyList();
 		} else {
-			return Collections.unmodifiableCollection(collection);
+			return Collections.unmodifiableList(collection);
 		}
+	}
+
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public static class Builder {
 		private final Map<String, List<String>> map = new LinkedHashMap<>();
 
-		public void put(String key, String value) {
+		private Builder() {
+		}
+
+		public Builder put(String key, String value) {
 			if (map.containsKey(key)) {
 				final List<String> list = map.get(key);
 				list.add(value);
@@ -75,6 +82,7 @@ public class DefaultParameters implements Parameters {
 				list.add(value);
 				map.put(key, list);
 			}
+			return this;
 		}
 
 		public DefaultParameters build() {

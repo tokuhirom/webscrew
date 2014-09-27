@@ -284,7 +284,8 @@ public class DefaultWebRequest implements WebRequest {
 				} else if (ServletFileUpload
 						.isMultipartContent(this.servletRequest)) {
 					// multipart/form-data
-					final Builder bodyParamsBuilder = new DefaultParameters.Builder();
+					final Builder bodyParamsBuilder = DefaultParameters
+							.builder();
 					final MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
 					final ServletFileUpload servletFileUpload = this
 							.createServletFileUpload();

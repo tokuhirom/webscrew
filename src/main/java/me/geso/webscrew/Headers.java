@@ -1,6 +1,7 @@
 package me.geso.webscrew;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -40,9 +41,9 @@ public class Headers {
 		key = key.toLowerCase();
 		final List<String> list = map.get(key);
 		if (list == null) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		} else {
-			return list;
+			return Collections.unmodifiableList(list);
 		}
 	}
 
@@ -66,6 +67,14 @@ public class Headers {
 
 	public void set(String key, String value) {
 		key = key.toLowerCase();
+		if (key.contains("\n")) {
+			throw new RuntimeException(
+					"You can't include new line character in header key.");
+		}
+		if (value.contains("\n")) {
+			throw new RuntimeException(
+					"You can't include new line character in header value.");
+		}
 		final List<String> values = new ArrayList<String>();
 		values.add(value);
 		map.put(key, values);
