@@ -1,12 +1,14 @@
 package me.geso.webscrew.request.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import me.geso.webscrew.Parameters;
-
-import org.apache.commons.collections4.MultiMap;
 
 /**
  * The class represents paremeters.
@@ -20,9 +22,9 @@ public class DefaultParameters implements Parameters {
 		return "Parameters [map=" + map + "]";
 	}
 
-	private final MultiMap<String, String> map;
+	private final Map<String, List<String>> map;
 
-	DefaultParameters(MultiMap<String, String> map) {
+	DefaultParameters(Map<String, List<String>> map) {
 		this.map = map;
 	}
 
@@ -34,8 +36,7 @@ public class DefaultParameters implements Parameters {
 	 */
 	@Override
 	public Optional<String> getFirst(String name) {
-		@SuppressWarnings("unchecked")
-		final Collection<String> collection = (Collection<String>) map
+		final Collection<String> collection = map
 				.get(name);
 		if (collection == null) {
 			return Optional.empty();
@@ -52,14 +53,32 @@ public class DefaultParameters implements Parameters {
 	 */
 	@Override
 	public Collection<String> getAll(String name) {
-		@SuppressWarnings("unchecked")
-		final Collection<String> collection = (Collection<String>) map
+		final Collection<String> collection = map
 				.get(name);
 		if (collection == null) {
 			return Collections.emptyList();
 		} else {
-			return collection;
+			return Collections.unmodifiableCollection(collection);
 		}
 	}
 
+	public static class Builder {
+		private final Map<String, List<String>> map = new LinkedHashMap<>();
+
+		public void put(String key, String value) {
+			if (map.containsKey(key)) {
+				final List<String> list = map.get(key);
+				list.add(value);
+				map.put(key, list);
+			} else {
+				final ArrayList<String> list = new ArrayList<>();
+				list.add(value);
+				map.put(key, list);
+			}
+		}
+
+		public DefaultParameters build() {
+			return new DefaultParameters(map);
+		}
+	}
 }

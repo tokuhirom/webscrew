@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
 import me.geso.webscrew.request.WebRequestUpload;
+import me.geso.webscrew.request.impl.DefaultParameters.Builder;
 
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
@@ -283,7 +284,7 @@ public class DefaultWebRequest implements WebRequest {
 				} else if (ServletFileUpload
 						.isMultipartContent(this.servletRequest)) {
 					// multipart/form-data
-					final MultiMap<String, String> bodyParams = new MultiValueMap<String, String>();
+					final Builder bodyParamsBuilder = new DefaultParameters.Builder();
 					final MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
 					final ServletFileUpload servletFileUpload = this
 							.createServletFileUpload();
@@ -293,14 +294,15 @@ public class DefaultWebRequest implements WebRequest {
 						if (fileItem.isFormField()) {
 							final String value = fileItem.getString(this
 									.getCharacterEncoding());
-							bodyParams.put(fileItem.getFieldName(), value);
+							bodyParamsBuilder.put(fileItem.getFieldName(),
+									value);
 						} else {
 							uploads.put(fileItem.getFieldName(),
 									new DefaultWebRequestUpload(fileItem));
 						}
 					}
 					this.uploads = uploads;
-					this.bodyParams = new DefaultParameters(bodyParams);
+					this.bodyParams = bodyParamsBuilder.build();
 				}
 			}
 			return this.bodyParams;
