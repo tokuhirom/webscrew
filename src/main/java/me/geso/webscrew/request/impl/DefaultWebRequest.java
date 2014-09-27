@@ -1,5 +1,7 @@
 package me.geso.webscrew.request.impl;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import lombok.SneakyThrows;
 import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
 import me.geso.webscrew.request.WebRequestUpload;
@@ -23,6 +24,7 @@ import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
@@ -177,7 +179,7 @@ public class DefaultWebRequest implements WebRequest {
 	public Optional<WebRequestUpload> getFileItem(final String name) {
 		@SuppressWarnings("unchecked")
 		final Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
-		.getFileItemMap().get(name);
+				.getFileItemMap().get(name);
 		if (items == null) {
 			return Optional.empty();
 		}
@@ -193,7 +195,7 @@ public class DefaultWebRequest implements WebRequest {
 	public Collection<WebRequestUpload> getFileItems(final String name) {
 		@SuppressWarnings("unchecked")
 		final Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
-		.getFileItemMap().get(name);
+				.getFileItemMap().get(name);
 		if (items == null) {
 			return new ArrayList<>();
 		}
@@ -232,11 +234,15 @@ public class DefaultWebRequest implements WebRequest {
 	 */
 	@Override
 	public Parameters getQueryParams() {
-		if (this.queryParams == null) {
-			this.queryParams = UrlEncoded.parseQueryString(
-					this.getQueryString(), this.getCharacterEncoding());
+		try {
+			if (this.queryParams == null) {
+				this.queryParams = UrlEncoded.parseQueryString(
+						this.getQueryString(), this.getCharacterEncoding());
+			}
+			return this.queryParams;
+		} catch (final UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
 		}
-		return this.queryParams;
 	}
 
 	/*
@@ -245,41 +251,44 @@ public class DefaultWebRequest implements WebRequest {
 	 * @see me.geso.webscrew.request.WebRequest#getBodyParams()
 	 */
 	@Override
-	@SneakyThrows
 	public Parameters getBodyParams() {
-		if (this.bodyParams == null) {
-			if (this.servletRequest.getContentType().startsWith(
-					"application/x-www-form-urlencoded")) {
-				// application/x-www-form-urlencoded
-				final String queryString = IOUtils.toString(
-						this.servletRequest.getInputStream(),
-						this.getCharacterEncoding());
-				this.bodyParams = UrlEncoded.parseQueryString(
-						queryString, this.getCharacterEncoding());
-			} else if (ServletFileUpload
-					.isMultipartContent(this.servletRequest)) {
-				// multipart/form-data
-				final MultiMap<String, String> bodyParams = new MultiValueMap<String, String>();
-				final MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
-				final ServletFileUpload servletFileUpload = this
-						.createServletFileUpload();
-				final List<FileItem> fileItems = servletFileUpload
-						.parseRequest(this.servletRequest);
-				for (final FileItem fileItem : fileItems) {
-					if (fileItem.isFormField()) {
-						final String value = fileItem.getString(this
-								.getCharacterEncoding());
-						bodyParams.put(fileItem.getFieldName(), value);
-					} else {
-						uploads.put(fileItem.getFieldName(),
-								new DefaultWebRequestUpload(fileItem));
+		try {
+			if (this.bodyParams == null) {
+				if (this.servletRequest.getContentType().startsWith(
+						"application/x-www-form-urlencoded")) {
+					// application/x-www-form-urlencoded
+					final String queryString = IOUtils.toString(
+							this.servletRequest.getInputStream(),
+							this.getCharacterEncoding());
+					this.bodyParams = UrlEncoded.parseQueryString(
+							queryString, this.getCharacterEncoding());
+				} else if (ServletFileUpload
+						.isMultipartContent(this.servletRequest)) {
+					// multipart/form-data
+					final MultiMap<String, String> bodyParams = new MultiValueMap<String, String>();
+					final MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
+					final ServletFileUpload servletFileUpload = this
+							.createServletFileUpload();
+					final List<FileItem> fileItems = servletFileUpload
+							.parseRequest(this.servletRequest);
+					for (final FileItem fileItem : fileItems) {
+						if (fileItem.isFormField()) {
+							final String value = fileItem.getString(this
+									.getCharacterEncoding());
+							bodyParams.put(fileItem.getFieldName(), value);
+						} else {
+							uploads.put(fileItem.getFieldName(),
+									new DefaultWebRequestUpload(fileItem));
+						}
 					}
+					this.uploads = uploads;
+					this.bodyParams = new Parameters(bodyParams);
 				}
-				this.uploads = uploads;
-				this.bodyParams = new Parameters(bodyParams);
 			}
+			return this.bodyParams;
+		} catch (final IOException | FileUploadException e) {
+			throw new RuntimeException(e);
 		}
-		return this.bodyParams;
 	}
 
 	/*
@@ -290,9 +299,12 @@ public class DefaultWebRequest implements WebRequest {
 	 * )
 	 */
 	@Override
-	@SneakyThrows
 	public void setCharacterEncoding(final String env) {
-		this.servletRequest.setCharacterEncoding(env);
+		try {
+			this.servletRequest.setCharacterEncoding(env);
+		} catch (final UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
