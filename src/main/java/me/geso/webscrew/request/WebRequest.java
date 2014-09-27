@@ -2,17 +2,16 @@ package me.geso.webscrew.request;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import me.geso.webscrew.Parameters;
 
-import org.apache.commons.collections4.MultiMap;
 
 public interface WebRequest {
 
@@ -122,7 +121,7 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public Optional<WebRequestUpload> getFileItem(String name);
+	public Optional<WebRequestUpload> getFirstFileItem(final String name);
 
 	/**
 	 * Get uploaded file items by name.
@@ -130,7 +129,9 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public Collection<WebRequestUpload> getFileItems(String name);
+	public List<WebRequestUpload> getAllFileItem(String parameterName);
+
+	public Set<String> getFileItemNames();
 
 	/**
 	 * Get {@code InputStream} for content body.
@@ -140,15 +141,9 @@ public interface WebRequest {
 	 */
 	public InputStream getInputStream() throws IOException;
 
-	/**
-	 * Get all uploaded file items.
-	 * 
-	 * @return
-	 */
-	public MultiMap<String, WebRequestUpload> getFileItemMap();
-
 	public Parameters getQueryParams();
 
 	public Parameters getBodyParams();
+
 
 }

@@ -5,12 +5,13 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.Cookie;
@@ -22,8 +23,6 @@ import me.geso.webscrew.request.WebRequest;
 import me.geso.webscrew.request.WebRequestUpload;
 import me.geso.webscrew.request.impl.DefaultParameters.Builder;
 
-import org.apache.commons.collections4.MultiMap;
-import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -40,7 +39,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class DefaultWebRequest implements WebRequest {
 	private final HttpServletRequest servletRequest;
-	private MultiMap<String, WebRequestUpload> uploads;
+	private Map<String, List<WebRequestUpload>> uploads;
 	private Parameters queryParams;
 	private Parameters bodyParams;
 
@@ -192,44 +191,37 @@ public class DefaultWebRequest implements WebRequest {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see me.geso.webscrew.request.WebRequest#getFileItem(java.lang.String)
-	 */
-	@Override
-	public Optional<WebRequestUpload> getFileItem(final String name) {
-		@SuppressWarnings("unchecked")
-		final Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
-				.getFileItemMap().get(name);
-		if (items == null) {
-			return Optional.empty();
-		}
-		return items.stream().findFirst();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getFileItems(java.lang.String)
 	 */
 	@Override
-	public Collection<WebRequestUpload> getFileItems(final String name) {
-		@SuppressWarnings("unchecked")
-		final Collection<WebRequestUpload> items = (Collection<WebRequestUpload>) this
-				.getFileItemMap().get(name);
+	public List<WebRequestUpload> getAllFileItem(
+			final String parameterName) {
+		this.getBodyParams(); // initialize this.uploads
+		final List<WebRequestUpload> items = this
+				.uploads.get(parameterName);
 		if (items == null) {
-			return new ArrayList<>();
+			return Collections.emptyList();
+		} else {
+			return Collections.unmodifiableList(items);
 		}
-		return items;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see me.geso.webscrew.request.WebRequest#getFileItemMap()
-	 */
 	@Override
-	public MultiMap<String, WebRequestUpload> getFileItemMap() {
+	public Optional<WebRequestUpload> getFirstFileItem(
+			final String parameterName) {
 		this.getBodyParams(); // initialize this.uploads
-		return this.uploads;
+		final List<WebRequestUpload> list = this.uploads.get(parameterName);
+		if (list.isEmpty()) {
+			return Optional.empty();
+		} else {
+			return Optional.of(list.get(0));
+		}
+	}
+
+	@Override
+	public Set<String> getFileItemNames() {
+		this.getBodyParams(); // initialize this.uploads
+		return this.uploads.keySet();
 	}
 
 	/**
@@ -286,7 +278,7 @@ public class DefaultWebRequest implements WebRequest {
 					// multipart/form-data
 					final Builder bodyParamsBuilder = DefaultParameters
 							.builder();
-					final MultiMap<String, WebRequestUpload> uploads = new MultiValueMap<>();
+					final Map<String, List<WebRequestUpload>> uploads = new LinkedHashMap<>();
 					final ServletFileUpload servletFileUpload = this
 							.createServletFileUpload();
 					final List<FileItem> fileItems = servletFileUpload
@@ -298,8 +290,19 @@ public class DefaultWebRequest implements WebRequest {
 							bodyParamsBuilder.put(fileItem.getFieldName(),
 									value);
 						} else {
-							uploads.put(fileItem.getFieldName(),
-									new DefaultWebRequestUpload(fileItem));
+							final DefaultWebRequestUpload upload = new DefaultWebRequestUpload(
+									fileItem);
+							final String key = fileItem.getFieldName();
+							if (uploads.containsKey(key)) {
+								final List<WebRequestUpload> list = uploads
+										.get(key);
+								list.add(upload);
+								uploads.put(fileItem.getFieldName(), list);
+							} else {
+								final List<WebRequestUpload> list = new ArrayList<>();
+								list.add(upload);
+								uploads.put(fileItem.getFieldName(), list);
+							}
 						}
 					}
 					this.uploads = uploads;
