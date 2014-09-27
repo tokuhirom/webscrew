@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
 
 import me.geso.webscrew.Parameters;
 
@@ -102,18 +101,6 @@ public interface WebRequest {
 	 * @return
 	 */
 	public Cookie[] getCookies();
-
-	/**
-	 * Get session object.
-	 * 
-	 * @return
-	 */
-	public HttpSession getSession();
-
-	/**
-	 * Change session id.
-	 */
-	public void changeSessionId();
 
 	/**
 	 * Get uploaded file object by name.

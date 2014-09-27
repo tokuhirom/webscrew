@@ -16,7 +16,6 @@ import java.util.TreeMap;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
@@ -152,26 +151,6 @@ public class DefaultWebRequest implements WebRequest {
 	@Override
 	public Cookie[] getCookies() {
 		return this.servletRequest.getCookies();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see me.geso.webscrew.request.WebRequest#getSession()
-	 */
-	@Override
-	public HttpSession getSession() {
-		return this.servletRequest.getSession();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see me.geso.webscrew.request.WebRequest#changeSessionId()
-	 */
-	@Override
-	public void changeSessionId() {
-		this.servletRequest.changeSessionId();
 	}
 
 	/**
