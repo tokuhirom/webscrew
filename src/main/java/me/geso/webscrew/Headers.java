@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class Headers {
 	// should be ordered. It makes testing easier.
-	private Map<String, List<String>> map = new TreeMap<>();
+	private final Map<String, List<String>> map = new TreeMap<>();
 
 	public void add(String key, String value) {
 		key = key.toLowerCase();
@@ -38,16 +38,17 @@ public class Headers {
 
 	public List<String> getAll(String key) {
 		key = key.toLowerCase();
-		List<String> list = map.get(key);
+		final List<String> list = map.get(key);
 		if (list == null) {
-			list = new ArrayList<>();
+			return new ArrayList<>();
+		} else {
+			return list;
 		}
-		return list;
 	}
 
 	public Optional<String> getFirst(String key) {
 		key = key.toLowerCase();
-		List<String> list = map.get(key);
+		final List<String> list = map.get(key);
 		if (list != null && list.size() > 0) {
 			return Optional.of(list.get(0));
 		} else {
@@ -65,7 +66,7 @@ public class Headers {
 
 	public void set(String key, String value) {
 		key = key.toLowerCase();
-		List<String> values = new ArrayList<String>();
+		final List<String> values = new ArrayList<String>();
 		values.add(value);
 		map.put(key, values);
 	}
