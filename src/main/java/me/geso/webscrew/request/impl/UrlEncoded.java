@@ -34,7 +34,7 @@ class UrlEncoded {
 				}
 			}
 		}
-		return new Parameters(query);
+		return new DefaultParameters(query);
 	}
 
 }

@@ -299,7 +299,7 @@ public class DefaultWebRequest implements WebRequest {
 						}
 					}
 					this.uploads = uploads;
-					this.bodyParams = new Parameters(bodyParams);
+					this.bodyParams = new DefaultParameters(bodyParams);
 				}
 			}
 			return this.bodyParams;
