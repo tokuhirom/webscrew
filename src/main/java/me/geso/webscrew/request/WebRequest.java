@@ -12,8 +12,6 @@ import me.geso.webscrew.Parameters;
 
 import org.apache.commons.collections4.MultiMap;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
 public interface WebRequest {
 
 	/**
@@ -115,24 +113,6 @@ public interface WebRequest {
 	 * Change session id.
 	 */
 	public abstract void changeSessionId();
-
-	/**
-	 * Read JSON from content-body. And parse it. This method runs hibernate
-	 * validator. If the validation was failed, it throws runtime exception.
-	 * 
-	 * @param typeReference
-	 * @return
-	 */
-	public abstract <T> T readJSON(TypeReference<T> typeReference);
-
-	/**
-	 * Read JSON from content-body. And parse it. This method runs hibernate
-	 * validator. If the validation was failed, it throws runtime exception.
-	 * 
-	 * @param klass
-	 * @return
-	 */
-	public abstract <T> T readJSON(Class<T> klass);
 
 	/**
 	 * Get uploaded file object by name.

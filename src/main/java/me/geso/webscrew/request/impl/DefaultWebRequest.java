@@ -9,12 +9,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import lombok.NonNull;
 import lombok.SneakyThrows;
 import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
@@ -29,7 +27,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -168,46 +165,6 @@ public class DefaultWebRequest implements WebRequest {
 	@Override
 	public void changeSessionId() {
 		this.servletRequest.changeSessionId();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * me.geso.webscrew.request.WebRequest#readJSON(com.fasterxml.jackson.core
-	 * .type.TypeReference)
-	 */
-	@Override
-	@SneakyThrows
-	public <T> T readJSON(@NonNull final TypeReference<T> typeReference) {
-		final ServletInputStream inputStream = this.servletRequest
-				.getInputStream();
-
-		final T instance = this.mapper.readValue(inputStream, typeReference);
-		if (instance != null) {
-			return instance;
-		} else {
-			throw new RuntimeException("null found... in content body");
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see me.geso.webscrew.request.WebRequest#readJSON(java.lang.Class)
-	 */
-	@Override
-	@SneakyThrows
-	public <T> T readJSON(@NonNull final Class<T> klass) {
-		final ServletInputStream inputStream = this.servletRequest
-				.getInputStream();
-
-		final T instance = this.mapper.readValue(inputStream, klass);
-		if (instance != null) {
-			return instance;
-		} else {
-			throw new RuntimeException("null found... in content body");
-		}
 	}
 
 	protected String getCharacterEncoding() {
