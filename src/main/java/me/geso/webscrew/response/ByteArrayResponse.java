@@ -21,27 +21,33 @@ import me.geso.webscrew.Headers;
  */
 @ToString
 public class ByteArrayResponse implements WebResponse {
-	@Getter
-	@Setter
-	Headers headers = new Headers();
+	private final Headers headers = new Headers();
 
 	@Getter
 	@Setter
 	private int status = 200;
 
 	@Getter
-	@Setter
-	private byte[] body;
+	private final byte[] body;
+
+	public ByteArrayResponse(int status, byte[] body) {
+		if (this.body == null) {
+			throw new NullPointerException("[ByteArrayResponse] Body is null");
+		}
+		this.status = status;
+		this.body = body;
+	}
 
 	private final List<Cookie> cookies = new ArrayList<>();
 
+	@Override
 	public void write(HttpServletResponse response) throws IOException {
 		response.setStatus(status);
-		for (Cookie cookie : this.cookies) {
+		for (final Cookie cookie : this.cookies) {
 			response.addCookie(cookie);
 		}
-		for (String key : headers.keySet()) {
-			for (String value : headers.getAll(key)) {
+		for (final String key : getHeaders().keySet()) {
+			for (final String value : getHeaders().getAll(key)) {
 				response.addHeader(key, value);
 			}
 		}
@@ -51,25 +57,30 @@ public class ByteArrayResponse implements WebResponse {
 	}
 
 	public void setContentType(String contentType) {
-		headers.add("Content-Type", contentType);
+		getHeaders().add("Content-Type", contentType);
 	}
 
 	public void setContentLength(long length) {
-		headers.add("Content-Length", "" + length);
+		getHeaders().add("Content-Length", "" + length);
 	}
 
 	@Override
 	public void addHeader(String name, String value) {
-		headers.add(name, value);
+		getHeaders().add(name, value);
 	}
 
 	@Override
 	public void setHeader(String name, String value) {
-		headers.set(name, value);
+		getHeaders().set(name, value);
 	}
 
 	@Override
 	public void addCookie(Cookie cookie) {
 		this.cookies.add(cookie);
 	}
+
+	public Headers getHeaders() {
+		return headers;
+	}
+
 }

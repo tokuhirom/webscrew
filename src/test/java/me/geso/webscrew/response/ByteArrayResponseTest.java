@@ -21,7 +21,8 @@ public class ByteArrayResponseTest {
 	public void testAddHeaders() throws Exception {
 		final HttpServlet servlet = new CallbackServlet(
 				(req, resp) -> {
-					final ByteArrayResponse byteArrayResponse = new ByteArrayResponse();
+					final ByteArrayResponse byteArrayResponse = new ByteArrayResponse(
+							200, "".getBytes());
 					byteArrayResponse.addHeader("X-Foo", "a");
 					byteArrayResponse.addHeader("X-Foo", "b");
 					byteArrayResponse.addHeader("X-Foo", "c");
@@ -29,6 +30,7 @@ public class ByteArrayResponseTest {
 				});
 		try (MechJettyServlet mech = new MechJettyServlet(servlet)) {
 			try (MechResponse res = mech.get("/").execute()) {
+				assertThat(res.getStatusCode(), is(200));
 				assertThat(res.getHeaders("X-Foo"),
 						is(Arrays.asList("a", "b", "c")));
 			}
@@ -39,7 +41,8 @@ public class ByteArrayResponseTest {
 	public void testAddCookie() throws Exception {
 		final HttpServlet servlet = new CallbackServlet(
 				(req, resp) -> {
-					final ByteArrayResponse byteArrayResponse = new ByteArrayResponse();
+					final ByteArrayResponse byteArrayResponse = new ByteArrayResponse(
+							200, "".getBytes());
 					final Cookie cookie = new Cookie("a", "b");
 					cookie.setMaxAge(500);
 					cookie.setHttpOnly(true);
