@@ -7,17 +7,16 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
 import me.geso.webscrew.request.WebRequestUpload;
 import me.geso.webscrew.request.impl.DefaultParameters.Builder;
@@ -39,8 +38,8 @@ import org.apache.commons.io.IOUtils;
 public class DefaultWebRequest implements WebRequest {
 	private final HttpServletRequest servletRequest;
 	private Map<String, List<WebRequestUpload>> uploads;
-	private Parameters queryParams;
-	private Parameters bodyParams;
+	private DefaultParameters queryParams;
+	private DefaultParameters bodyParams;
 
 	public DefaultWebRequest(final HttpServletRequest request,
 			String characterEncoding) throws UnsupportedEncodingException {
@@ -69,7 +68,7 @@ public class DefaultWebRequest implements WebRequest {
 	 * @see me.geso.webscrew.request.WebRequest#getHeader(java.lang.String)
 	 */
 	@Override
-	public String getHeader(final String name) {
+	public String getFirstHeader(final String name) {
 		return this.servletRequest.getHeader(name);
 	}
 
@@ -79,7 +78,7 @@ public class DefaultWebRequest implements WebRequest {
 	 * @see me.geso.webscrew.request.WebRequest#getHeaders(java.lang.String)
 	 */
 	@Override
-	public List<String> getHeaders(final String name) {
+	public List<String> getAllHeaders(final String name) {
 		return Collections.list(this.servletRequest.getHeaders(name));
 	}
 
@@ -89,18 +88,14 @@ public class DefaultWebRequest implements WebRequest {
 	 * @see me.geso.webscrew.request.WebRequest#getHeaderMap()
 	 */
 	@Override
-	public Map<String, List<String>> getHeaderMap() {
-		final Map<String, List<String>> map = new TreeMap<>();
+	public Set<String> getHeaderNames() {
+		final Set<String> set = new HashSet<String>();
 		final Enumeration<String> headerNames = this.servletRequest
 				.getHeaderNames();
 		while (headerNames.hasMoreElements()) {
-			final String name = headerNames.nextElement();
-			final ArrayList<String> values = Collections
-					.list(this.servletRequest
-							.getHeaders(name));
-			map.put(name, values);
+			set.add(headerNames.nextElement());
 		}
-		return map;
+		return set;
 	}
 
 	/*
@@ -217,13 +212,7 @@ public class DefaultWebRequest implements WebRequest {
 		return new ServletFileUpload(fileItemFactory);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see me.geso.webscrew.request.WebRequest#getQueryParams()
-	 */
-	@Override
-	public Parameters getQueryParams() {
+	private DefaultParameters getQueryParams() {
 		try {
 			if (this.queryParams == null) {
 				this.queryParams = UrlEncoded.parseQueryString(
@@ -240,8 +229,7 @@ public class DefaultWebRequest implements WebRequest {
 	 * 
 	 * @see me.geso.webscrew.request.WebRequest#getBodyParams()
 	 */
-	@Override
-	public Parameters getBodyParams() {
+	private DefaultParameters getBodyParams() {
 		try {
 			if (this.bodyParams == null) {
 				if (this.servletRequest.getContentType().startsWith(
@@ -299,4 +287,33 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getInputStream();
 	}
 
+	@Override
+	public Optional<String> getFirstQueryParameter(String name) {
+		return this.getQueryParams().getFirst(name);
+	}
+
+	@Override
+	public List<String> getAllQueryParameters(String name) {
+		return this.getQueryParams().getAll(name);
+	}
+
+	@Override
+	public Set<String> getQueryParameterKeys() {
+		return this.getQueryParams().getKeys();
+	}
+
+	@Override
+	public Optional<String> getFirstBodyParameter(String name) {
+		return this.getBodyParams().getFirst(name);
+	}
+
+	@Override
+	public List<String> getAllBodyParameters(String name) {
+		return this.getBodyParams().getAll(name);
+	}
+
+	@Override
+	public Set<String> getBodyParameterKeys() {
+		return this.getBodyParams().getKeys();
+	}
 }

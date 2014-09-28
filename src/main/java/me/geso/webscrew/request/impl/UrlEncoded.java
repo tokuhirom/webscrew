@@ -4,10 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 import lombok.NonNull;
-import me.geso.webscrew.Parameters;
 
 class UrlEncoded {
-	static Parameters parseQueryString(String queryString,
+	static DefaultParameters parseQueryString(String queryString,
 			@NonNull String encoding) throws UnsupportedEncodingException {
 		final DefaultParameters.Builder builder = DefaultParameters.builder();
 		if (queryString != null) {

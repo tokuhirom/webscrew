@@ -5,15 +5,13 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
-import me.geso.webscrew.Parameters;
-
 import org.junit.Test;
 
 public class DefaultParametersTest {
 
 	@Test
 	public void testGetOK() {
-		final Parameters parameters = DefaultParameters.builder()
+		final DefaultParameters parameters = DefaultParameters.builder()
 				.put("hoge", "fuga")
 				.build();
 		assertThat(parameters.getFirst("hoge").get(), is("fuga"));
@@ -22,7 +20,7 @@ public class DefaultParametersTest {
 
 	@Test
 	public void testGetAll() {
-		final Parameters parameters = DefaultParameters.builder()
+		final DefaultParameters parameters = DefaultParameters.builder()
 				.put("hoge", "fuga")
 				.put("hoge", "hige")
 				.build();
