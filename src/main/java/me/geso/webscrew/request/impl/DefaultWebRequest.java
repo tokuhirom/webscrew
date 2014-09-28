@@ -190,10 +190,14 @@ public class DefaultWebRequest implements WebRequest {
 			final String parameterName) {
 		this.getBodyParams(); // initialize this.uploads
 		final List<WebRequestUpload> list = this.uploads.get(parameterName);
-		if (list.isEmpty()) {
+		if (list == null) {
 			return Optional.empty();
 		} else {
-			return Optional.of(list.get(0));
+			if (list.isEmpty()) {
+				return Optional.empty();
+			} else {
+				return Optional.of(list.get(0));
+			}
 		}
 	}
 

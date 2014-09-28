@@ -3,6 +3,7 @@ package me.geso.webscrew.request.impl;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,33 @@ public class DefaultWebRequestTest {
 				});
 		try (MechJettyServlet mech = new MechJettyServlet(servlet)) {
 			try (MechResponse res = mech.get("/?hoge=fuga").execute()) {
+				assertThat(res.getContentString(),
+						is("ok"));
+			}
+		}
+	}
+
+	@Test
+	public void testGetFirstFileItem() throws Exception {
+		final HttpServlet servlet = new CallbackServlet(
+				(req, resp) -> {
+					final DefaultWebRequest r = new DefaultWebRequest(req,
+							StandardCharsets.UTF_8);
+					assertThat(
+							r.getFirstFileItem("hoge").isPresent(),
+							is(true));
+					assertThat(
+							r.getFirstFileItem("hoge").get().getString("UTF-8"),
+							is("hello"));
+					assertThat(
+							r.getFirstFileItem("fuga").isPresent(),
+							is(false));
+					resp.getWriter().write("ok");
+				});
+		try (MechJettyServlet mech = new MechJettyServlet(servlet)) {
+			try (MechResponse res = mech.postMultipart("/")
+					.file("hoge", new File("src/test/resources/hello.txt"))
+					.execute()) {
 				assertThat(res.getContentString(),
 						is("ok"));
 			}
