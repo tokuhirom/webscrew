@@ -3,10 +3,13 @@ package me.geso.webscrew.request;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
+
+import me.geso.webscrew.Parameters;
 
 
 public interface WebRequest {
@@ -24,7 +27,7 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public String getFirstHeader(final String name);
+	public String getHeader(String name);
 
 	/**
 	 * Get all header values by name.
@@ -32,9 +35,14 @@ public interface WebRequest {
 	 * @param name
 	 * @return
 	 */
-	public List<String> getAllHeaders(final String name);
+	public List<String> getHeaders(String name);
 
-	public Set<String> getHeaderNames();
+	/**
+	 * Get all headers in Map.
+	 * 
+	 * @return
+	 */
+	public Map<String, List<String>> getHeaderMap();
 
 	/**
 	 * Get CONTENT_LENGTH.
@@ -108,7 +116,7 @@ public interface WebRequest {
 	 * @param parameterName
 	 * @return
 	 */
-	public List<WebRequestUpload> getAllFileItems(final String parameterName);
+	public List<WebRequestUpload> getAllFileItems(String parameterName);
 
 	public Set<String> getFileItemNames();
 
@@ -120,17 +128,9 @@ public interface WebRequest {
 	 */
 	public InputStream getInputStream() throws IOException;
 
-	public Optional<String> getFirstQueryParameter(final String parameterName);
+	public Parameters getQueryParams();
 
-	public List<String> getAllQueryParameters(final String parameterName);
-
-	public Set<String> getQueryParameterKeys();
-
-	public Optional<String> getFirstBodyParameter(final String parameterName);
-
-	public List<String> getAllBodyParameters(final String parameterName);
-
-	public Set<String> getBodyParameterKeys();
+	public Parameters getBodyParams();
 
 
 }

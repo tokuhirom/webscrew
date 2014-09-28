@@ -7,7 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+
+import me.geso.webscrew.Parameters;
 
 /**
  * The class represents paremeters.
@@ -15,7 +16,7 @@ import java.util.Set;
  * @author tokuhirom
  *
  */
-public class DefaultParameters {
+public class DefaultParameters implements Parameters {
 	@Override
 	public String toString() {
 		return "Parameters [map=" + map + "]";
@@ -33,6 +34,7 @@ public class DefaultParameters {
 	 * @param name
 	 * @return
 	 */
+	@Override
 	public Optional<String> getFirst(String name) {
 		final Collection<String> collection = map
 				.get(name);
@@ -49,6 +51,7 @@ public class DefaultParameters {
 	 * @param name
 	 * @return
 	 */
+	@Override
 	public List<String> getAll(final String name) {
 		final List<String> collection = map
 				.get(name);
@@ -57,10 +60,6 @@ public class DefaultParameters {
 		} else {
 			return Collections.unmodifiableList(collection);
 		}
-	}
-
-	public Set<String> getKeys() {
-		return this.map.keySet();
 	}
 
 	public static Builder builder() {
