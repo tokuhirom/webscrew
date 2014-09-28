@@ -8,8 +8,6 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.geso.webscrew.Headers;
 
@@ -23,11 +21,8 @@ import me.geso.webscrew.Headers;
 public class ByteArrayResponse implements WebResponse {
 	private final Headers headers = new Headers();
 
-	@Getter
-	@Setter
 	private int status = 200;
 
-	@Getter
 	private final byte[] body;
 
 	public ByteArrayResponse(int status, byte[] body) {
@@ -81,6 +76,18 @@ public class ByteArrayResponse implements WebResponse {
 
 	public Headers getHeaders() {
 		return headers;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public byte[] getBody() {
+		return body;
 	}
 
 }
