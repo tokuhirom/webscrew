@@ -26,7 +26,7 @@ public class ByteArrayResponse implements WebResponse {
 	private final byte[] body;
 
 	public ByteArrayResponse(int status, byte[] body) {
-		if (this.body == null) {
+		if (body == null) {
 			throw new NullPointerException("[ByteArrayResponse] Body is null");
 		}
 		this.status = status;
