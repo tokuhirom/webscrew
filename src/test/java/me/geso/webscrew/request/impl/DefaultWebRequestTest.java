@@ -61,4 +61,25 @@ public class DefaultWebRequestTest {
 		}
 	}
 
+	@Test
+	public void testGetUserAgent() throws Exception {
+		final HttpServlet servlet = new CallbackServlet(
+				(req, resp) -> {
+					final DefaultWebRequest r = new DefaultWebRequest(req,
+							StandardCharsets.UTF_8);
+					assertThat(
+							r.getUserAgent().startsWith("Apache-HttpClient"),
+							is(true));
+					resp.getWriter().write("ok");
+				});
+		try (MechJettyServlet mech = new MechJettyServlet(servlet)) {
+			try (MechResponse res = mech.get("/").execute()) {
+				assertThat(res.getStatusCode(),
+						is(200));
+				assertThat(res.getContentString(),
+						is("ok"));
+			}
+		}
+	}
+
 }

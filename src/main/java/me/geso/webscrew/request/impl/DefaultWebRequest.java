@@ -63,6 +63,26 @@ public class DefaultWebRequest implements WebRequest {
 		return this.servletRequest.getPathInfo();
 	}
 
+	@Override
+	public String getRemoteAddr() {
+		return this.servletRequest.getRemoteAddr();
+	}
+
+	@Override
+	public String getRemoteHost() {
+		return this.servletRequest.getRemoteHost();
+	}
+
+	@Override
+	public String getContentType() {
+		return this.servletRequest.getContentType();
+	}
+
+	@Override
+	public String getUserAgent() {
+		return this.getHeader("User-Agent");
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -11,7 +11,6 @@ import javax.servlet.http.Cookie;
 
 import me.geso.webscrew.Parameters;
 
-
 public interface WebRequest {
 
 	/**
@@ -132,5 +131,32 @@ public interface WebRequest {
 
 	public Parameters getBodyParams();
 
+	/**
+	 * Get REMOTE_ADDR.
+	 * 
+	 * @return
+	 */
+	public String getRemoteAddr();
+
+	/**
+	 * Get REMOTE_HOST
+	 * 
+	 * @return
+	 */
+	public String getRemoteHost();
+
+	/**
+	 * Get content-type.
+	 * 
+	 * @return
+	 */
+	public String getContentType();
+
+	/**
+	 * Get User-Agent header.
+	 * 
+	 * @return
+	 */
+	public String getUserAgent();
 
 }
