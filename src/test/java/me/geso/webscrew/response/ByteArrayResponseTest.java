@@ -72,4 +72,11 @@ public class ByteArrayResponseTest {
 			}
 		}
 	}
+
+	@Test
+	public void testGetBytes() {
+		final byte[] body = "hoge".getBytes();
+		final ByteArrayResponse resp = new ByteArrayResponse(200, body);
+		assertThat(resp.getBody(), is(body));
+	}
 }

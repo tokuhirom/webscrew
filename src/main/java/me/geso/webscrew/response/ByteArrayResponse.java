@@ -3,6 +3,7 @@ package me.geso.webscrew.response;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -87,7 +88,7 @@ public class ByteArrayResponse implements WebResponse {
 	}
 
 	public byte[] getBody() {
-		return body;
+		return Arrays.copyOf(body, body.length);
 	}
 
 }
