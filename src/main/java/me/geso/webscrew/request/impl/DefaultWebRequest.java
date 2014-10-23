@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.ToString;
 import me.geso.webscrew.Parameters;
 import me.geso.webscrew.request.WebRequest;
 import me.geso.webscrew.request.WebRequestUpload;
@@ -36,6 +37,7 @@ import org.apache.commons.io.IOUtils;
  * @author tokuhirom
  *
  */
+@ToString
 public class DefaultWebRequest implements WebRequest {
 	private final HttpServletRequest servletRequest;
 	private Map<String, List<WebRequestUpload>> uploads;
