@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 /**
  * Authorization header parser.
  * 
- * {@link https://www.ietf.org/rfc/rfc2617.txt}
+ * <p>
+ * <a href="https://www.ietf.org/rfc/rfc2617.txt">RFC 2617</a>
  */
 public class HttpBasicAuthHeaderParser {
 	// "case-insensitive token to identify the authentication scheme" in RFC2617
