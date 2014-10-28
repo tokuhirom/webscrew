@@ -3,9 +3,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.geso</groupId>
 	<artifactId>webscrew</artifactId>
-	<version>0.7.5-SNAPSHOT</version>
+	<version>0.7.4-SNAPSHOT</version>
 	<name>webscrew</name>
 	<description>webscrew</description>
+	<url>http://github.com/tokuhirom/webscrew</url>
+
+
+    <developers>
+        <developer>
+            <id>tokuhirom</id>
+            <name>Tokuhiro Matsuno</name>
+            <email>tokuhirom@gmail.com</email>
+            <url>https://twitter.com/tokuhirom</url>
+        </developer>
+		</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,15 +36,6 @@
 		<developerConnection>scm:git:git@github.com:tokuhirom/webscrew.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-
-    <developers>
-        <developer>
-            <id>tokuhirom</id>
-            <name>Tokuhiro Matsuno</name>
-            <email>tokuhirom@gmail.com</email>
-            <url>https://twitter.com/tokuhirom</url>
-        </developer>
-    </developers>
 
     <distributionManagement>
         <snapshotRepository>
@@ -157,6 +159,20 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.1</version>
       </plugin>
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+							<execution>
+									<id>sign-artifacts</id>
+									<phase>verify</phase>
+									<goals>
+											<goal>sign</goal>
+									</goals>
+							</execution>
+					</executions>
+			</plugin>
 		</plugins>
 	</build>
 
