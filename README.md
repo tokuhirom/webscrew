@@ -6,7 +6,11 @@ webscrew is a web application toolkit for Java servlet like Plack/Rack.
 
 ## INSTALLATION
 
-TBD
+  <dependency>
+    <groupId>me.geso</groupId>
+    <artifactId>webscrew</artifactId>
+    <version>${webscrew.version}</version>
+  </dependency>
 
 ## MOTIVATION
 
