@@ -31,13 +31,6 @@
 		</license>
 	</licenses>
 
-	<repositories>
-		<repository>
-			<id>tokuhirom</id>
-			<url>https://tokuhirom.github.io/maven/releases/</url>
-		</repository>
-	</repositories>
-
 	<scm>
 		<url>https://github.com/tokuhirom/webscrew/</url>
 		<connection>scm:git:git://github.com/tokuhirom/webscrew.git</connection>
