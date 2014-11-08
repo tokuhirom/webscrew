@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.geso</groupId>
 	<artifactId>webscrew</artifactId>
-	<version>0.7.11-SNAPSHOT</version>
+	<version>0.7.11</version>
 	<name>webscrew</name>
 	<description>webscrew</description>
 	<url>http://github.com/tokuhirom/webscrew</url>
@@ -36,7 +35,7 @@
 		<url>https://github.com/tokuhirom/webscrew/</url>
 		<connection>scm:git:git://github.com/tokuhirom/webscrew.git</connection>
 		<developerConnection>scm:git:git@github.com:tokuhirom/webscrew.git</developerConnection>
-		<tag>webscrew-0.7.8</tag>
+		<tag>webscrew-0.7.11</tag>
 	</scm>
 
 	<distributionManagement>
