@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.geso</groupId>
 	<artifactId>webscrew</artifactId>
-	<version>0.8.0</version>
+	<version>0.8.1-SNAPSHOT</version>
 	<name>webscrew</name>
 	<description>webscrew</description>
 	<url>http://github.com/tokuhirom/webscrew</url>
@@ -35,7 +35,7 @@
 		<url>https://github.com/tokuhirom/webscrew/</url>
 		<connection>scm:git:git://github.com/tokuhirom/webscrew.git</connection>
 		<developerConnection>scm:git:git@github.com:tokuhirom/webscrew.git</developerConnection>
-		<tag>webscrew-0.8.0</tag>
+		<tag>webscrew-0.7.8</tag>
 	</scm>
 
 	<distributionManagement>
