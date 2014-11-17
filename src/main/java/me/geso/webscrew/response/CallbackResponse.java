@@ -21,8 +21,10 @@ public class CallbackResponse implements WebResponse {
 	private final Callback callback;
 	private final Headers headers;
 	private final List<Cookie> cookies;
+	private int statusCode;
 
 	public CallbackResponse(@NonNull Callback callback) {
+		this.statusCode = 200;
 		this.callback = callback;
 		this.headers = new Headers();
 		this.cookies = new ArrayList<>();
@@ -30,6 +32,7 @@ public class CallbackResponse implements WebResponse {
 
 	@Override
 	public void write(HttpServletResponse response) throws IOException {
+		response.setStatus(this.statusCode);
 		for (final Cookie cookie : this.cookies) {
 			response.addCookie(cookie);
 		}
@@ -63,6 +66,11 @@ public class CallbackResponse implements WebResponse {
 	@Override
 	public void addCookie(Cookie cookie) {
 		this.cookies.add(cookie);
+	}
+
+	@Override
+	public void setStatus(int statusCode) {
+		this.statusCode = statusCode;
 	}
 
 }

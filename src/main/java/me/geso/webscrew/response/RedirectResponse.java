@@ -55,4 +55,10 @@ public class RedirectResponse implements WebResponse {
 		this.cookies.add(cookie);
 	}
 
+	@Override
+	public void setStatus(int statusCode) {
+		throw new RuntimeException(
+				"Redirect response doesn't support setStatus method, yet.");
+	}
+
 }

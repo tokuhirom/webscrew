@@ -25,4 +25,11 @@ public interface WebResponse {
 	public void addCookie(Cookie cookie);
 
 	public void setHeader(String name, String value);
+
+	/**
+	 * Set status code
+	 * 
+	 * @param statusCode
+	 */
+	public void setStatus(int statusCode);
 }
