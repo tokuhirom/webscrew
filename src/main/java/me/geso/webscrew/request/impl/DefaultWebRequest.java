@@ -38,6 +38,7 @@ import org.apache.commons.io.IOUtils;
  *
  */
 @ToString
+@Deprecated
 public class DefaultWebRequest implements WebRequest {
 	private final HttpServletRequest servletRequest;
 	private Map<String, List<WebRequestUpload>> uploads;

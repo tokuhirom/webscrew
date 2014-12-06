@@ -8,6 +8,7 @@ import me.geso.webscrew.request.WebRequestUpload;
 
 import org.apache.commons.fileupload.FileItem;
 
+@Deprecated
 public class DefaultWebRequestUpload implements WebRequestUpload {
 
 	private final FileItem fileItem;

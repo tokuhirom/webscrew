@@ -3,11 +3,9 @@ package me.geso.webscrew.request;
 import java.io.InputStream;
 
 /**
- * Interface for uploaded file in HTTP request.
- * 
- * @author tokuhirom
- *
+ * Use Part directly.
  */
+@Deprecated
 public interface WebRequestUpload {
 
 	/**

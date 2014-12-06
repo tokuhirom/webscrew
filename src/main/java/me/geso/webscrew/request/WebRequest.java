@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 
 import me.geso.webscrew.Parameters;
 
+@Deprecated
 public interface WebRequest {
 
 	/**
