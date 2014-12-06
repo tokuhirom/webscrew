@@ -6,6 +6,11 @@ import java.net.URLDecoder;
 import lombok.NonNull;
 import me.geso.webscrew.Parameters;
 
+/**
+ * Interface is not good. The class like this should use standard collection instead of DefaultParameters.
+ * If you want to use this, you can move this class to different package.
+ */
+@Deprecated
 class UrlEncoded {
 	static Parameters parseQueryString(String queryString,
 			@NonNull String encoding) throws UnsupportedEncodingException {

@@ -11,11 +11,9 @@ import java.util.Optional;
 import me.geso.webscrew.Parameters;
 
 /**
- * The class represents paremeters.
- * 
- * @author tokuhirom
- *
+ * There is no reason to use this.
  */
+@Deprecated
 public class DefaultParameters implements Parameters {
 	@Override
 	public String toString() {

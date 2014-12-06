@@ -11,6 +11,7 @@ import me.geso.webscrew.Utils;
 
 import org.junit.Test;
 
+@SuppressWarnings("deprecation")
 public class DefaultWebRequestTest {
 
 	@Test
