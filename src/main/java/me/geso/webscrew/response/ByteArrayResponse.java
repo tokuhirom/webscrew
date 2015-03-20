@@ -39,9 +39,7 @@ public class ByteArrayResponse implements WebResponse {
 	@Override
 	public void write(HttpServletResponse response) throws IOException {
 		response.setStatus(status);
-		for (final Cookie cookie : this.cookies) {
-			response.addCookie(cookie);
-		}
+		this.cookies.forEach(response::addCookie);
 		for (final String key : getHeaders().keySet()) {
 			for (final String value : getHeaders().getAll(key)) {
 				response.addHeader(key, value);

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 public class HttpBasicAuthHeaderParserTest {
 
+	@SuppressWarnings("SpellCheckingInspection")
 	@Test
 	public void test() {
 		{

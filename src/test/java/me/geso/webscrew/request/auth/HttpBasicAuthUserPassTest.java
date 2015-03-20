@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class HttpBasicAuthUserPassTest {
 
 	@Test

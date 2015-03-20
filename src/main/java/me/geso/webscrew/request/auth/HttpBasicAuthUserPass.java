@@ -13,8 +13,8 @@ public class HttpBasicAuthUserPass {
 	/**
 	 * Create new instance.
 	 * 
-	 * @param userId
-	 * @param password
+	 * @param userId id
+	 * @param password password
 	 */
 	public HttpBasicAuthUserPass(String userId, String password) {
 		this.userId = userId;
@@ -23,7 +23,6 @@ public class HttpBasicAuthUserPass {
 
 	/**
 	 * Get user id.
-	 * @return
 	 */
 	public String getUserId() {
 		return this.userId;
@@ -31,7 +30,6 @@ public class HttpBasicAuthUserPass {
 
 	/**
 	 * Get password
-	 * @return
 	 */
 	public String getPassword() {
 		return this.password;

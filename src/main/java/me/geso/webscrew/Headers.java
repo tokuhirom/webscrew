@@ -32,7 +32,7 @@ public class Headers {
 					"You can't include new line character in header value.");
 		}
 		if (!map.containsKey(key)) {
-			map.put(key, new ArrayList<String>());
+			map.put(key, new ArrayList<>());
 		}
 		map.get(key).add(value);
 	}
@@ -75,7 +75,7 @@ public class Headers {
 			throw new RuntimeException(
 					"You can't include new line character in header value.");
 		}
-		final List<String> values = new ArrayList<String>();
+		final List<String> values = new ArrayList<>();
 		values.add(value);
 		map.put(key, values);
 	}

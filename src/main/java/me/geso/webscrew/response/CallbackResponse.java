@@ -33,9 +33,7 @@ public class CallbackResponse implements WebResponse {
 	@Override
 	public void write(HttpServletResponse response) throws IOException {
 		response.setStatus(this.statusCode);
-		for (final Cookie cookie : this.cookies) {
-			response.addCookie(cookie);
-		}
+		this.cookies.forEach(response::addCookie);
 		for (final String name : headers.keySet()) {
 			for (final String value : headers.getAll(name)) {
 				response.addHeader(name, value);
@@ -60,6 +58,7 @@ public class CallbackResponse implements WebResponse {
 
 	@FunctionalInterface
 	public static interface Callback {
+		@SuppressWarnings("RedundantThrows")
 		public void call(HttpServletResponse resp) throws Exception;
 	}
 

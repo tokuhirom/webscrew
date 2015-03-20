@@ -29,9 +29,7 @@ public class RedirectResponse implements WebResponse {
 
 	@Override
 	public void write(HttpServletResponse response) throws IOException {
-		for (final Cookie cookie : this.cookies) {
-			response.addCookie(cookie);
-		}
+		this.cookies.forEach(response::addCookie);
 		for (final String name : headers.keySet()) {
 			for (final String value : headers.getAll(name)) {
 				response.addHeader(name, value);

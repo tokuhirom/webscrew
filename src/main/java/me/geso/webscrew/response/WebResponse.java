@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface WebResponse {
 	/**
 	 * Write the response to HttpServletResponse object.
-	 * 
-	 * @param response
-	 * @throws IOException
 	 */
 	public void write(HttpServletResponse response) throws IOException;
 
@@ -28,8 +25,6 @@ public interface WebResponse {
 
 	/**
 	 * Set status code
-	 * 
-	 * @param statusCode
 	 */
 	public void setStatus(int statusCode);
 }

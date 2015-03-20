@@ -1,17 +1,18 @@
 package me.geso.webscrew.response;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 
-import me.geso.webscrew.Utils;
-
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.junit.Test;
+
+import me.geso.webscrew.Utils;
 
 public class RedirectResponseTest {
 
@@ -32,7 +33,7 @@ public class RedirectResponseTest {
 					assertThat(res.getStatusLine().getStatusCode(), is(302));
 					assertThat(
 							Arrays.stream(res.getHeaders("X-Foo"))
-									.map(it -> it.getValue())
+									.map(Header::getValue)
 									.collect(Collectors.toList()),
 							is(Arrays.asList("a", "b", "c")));
 				});
@@ -53,7 +54,7 @@ public class RedirectResponseTest {
 					assertThat(res.getStatusLine().getStatusCode(), is(302));
 					assertThat(
 							Arrays.stream(res.getHeaders("Set-Cookie"))
-									.map(it -> it.getValue())
+									.map(Header::getValue)
 									.collect(Collectors.toList()),
 							is(Arrays.asList("a=B")));
 				});

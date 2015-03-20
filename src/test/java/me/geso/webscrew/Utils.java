@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import me.geso.mech2.Mech2;
-import me.geso.mech2.Mech2WithBase;
-import me.geso.servlettester.jetty.JettyServletTester;
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+
+import me.geso.mech2.Mech2;
+import me.geso.mech2.Mech2WithBase;
+import me.geso.servlettester.jetty.JettyServletTester;
 
 public class Utils {
 	@FunctionalInterface
