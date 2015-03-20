@@ -17,6 +17,15 @@ webscrew is a web application toolkit for Java servlet like Plack/Rack.
 
 I need a utility libraries for Java servlets.
 
+## FEATURES
+
+  * Helper functions for HttpServletRequest.
+    * uriFor
+    * uriWith
+    * getCurrentURI
+  * Helper utilities for basic auth.
+  * Response objects.
+
 ## LICENSE
 
       The MIT License (MIT)
