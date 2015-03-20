@@ -1,6 +1,7 @@
 # webscrew
 
 [![Build Status](https://travis-ci.org/tokuhirom/webscrew.svg?branch=master)](https://travis-ci.org/tokuhirom/webscrew)
+[![javadoc.io](https://javadocio-badges.herokuapp.com/me.geso/webscrew/badge.svg)](https://javadocio-badges.herokuapp.com/me.geso/webscrew)
 
 webscrew is a web application toolkit for Java servlet like Plack/Rack.
 
